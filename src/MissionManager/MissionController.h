@@ -71,6 +71,7 @@ public:
     } MissionFlightStatus_t;
 
     Q_PROPERTY(QmlObjectListModel*  visualItems                     READ visualItems                    NOTIFY visualItemsChanged)
+    Q_PROPERTY(QmlObjectListModel*  customMissionItems              READ customMissionItems             NOTIFY customMissionItemsChanged)
     Q_PROPERTY(QmlObjectListModel*  simpleFlightPathSegments        READ simpleFlightPathSegments       CONSTANT)                               ///< Used by Plan view only for interactive editing
     Q_PROPERTY(QVariantList         waypointPath                    READ waypointPath                   NOTIFY waypointPathChanged)             ///< Used by Fly view only for static display
     Q_PROPERTY(QmlObjectListModel*  directionArrows                 READ directionArrows                CONSTANT)
@@ -219,6 +220,7 @@ public:
     // Property accessors
 
     QmlObjectListModel* visualItems                 (void) { return _visualItems; }
+    QmlObjectListModel* customMissionItems          (void) { return _customMissionItems; }
     QmlObjectListModel* simpleFlightPathSegments    (void) { return &_simpleFlightPathSegments; }
     QmlObjectListModel* directionArrows             (void) { return &_directionArrows; }
     QmlObjectListModel* incompleteComplexItemLines  (void) { return &_incompleteComplexItemLines; }
@@ -260,6 +262,7 @@ public:
 
 signals:
     void visualItemsChanged                 (void);
+    void customMissionItemsChanged          (void);
     void waypointPathChanged                (void);
     void splitSegmentChanged                (void);
     void newItemsFromVehicle                (void);
@@ -366,6 +369,7 @@ private:
     MissionManager*             _missionManager =               nullptr;
     int                         _missionItemCount =             0;
     QmlObjectListModel*         _visualItems =                  nullptr;
+    QmlObjectListModel*         _customMissionItems =           nullptr;
     MissionSettingsItem*        _settingsItem =                 nullptr;
     PlanViewSettings*           _planViewSettings =             nullptr;
     QmlObjectListModel          _simpleFlightPathSegments;

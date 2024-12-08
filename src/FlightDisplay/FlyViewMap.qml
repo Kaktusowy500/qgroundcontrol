@@ -287,6 +287,14 @@ FlightMap {
             z:              QGroundControl.zOrderVehicles
         }
     }
+
+    MapItemView {
+        model: _missionController.customMissionItems
+        delegate: CameraTriggerIndicator {
+            coordinate:    object.coordinate
+            z:          QGroundControl.zOrderTopMost
+        }
+    }
     // Add distance sensor view
     MapItemView{
         model: QGroundControl.multiVehicleManager.vehicles

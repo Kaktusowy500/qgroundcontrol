@@ -60,6 +60,7 @@ MissionController::MissionController(PlanMasterController* masterController, QOb
     , _managerVehicle       (masterController->managerVehicle())
     , _missionManager       (masterController->managerVehicle()->missionManager())
     , _visualItems          (new QmlObjectListModel(this))
+    , _customMissionItems   (new QmlObjectListModel(this))
     , _planViewSettings     (qgcApp()->toolbox()->settingsManager()->planViewSettings())
     , _appSettings          (qgcApp()->toolbox()->settingsManager()->appSettings())
 {
@@ -143,6 +144,10 @@ void MissionController::_init(void)
     // We start with an empty mission
     _addMissionSettings(_visualItems);
     _initAllVisualItems();
+
+    // init example custom items
+    QGeoCoordinate testCoord(50.1, 18.2, 300);
+    _customMissionItems->append(new QGCQGeoCoordinate(testCoord));
 }
 
 // Called when new mission items have completed downloading from Vehicle
