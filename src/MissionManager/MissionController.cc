@@ -150,6 +150,13 @@ void MissionController::_init(void)
     _customMissionItems->append(new QGCQGeoCoordinate(testCoord));
 }
 
+void MissionController::addCustomMissionItem(const std::vector<double>& itemVect)
+{
+    QGeoCoordinate coord(itemVect[0], itemVect[1], 300);
+    _customMissionItems->append(new QGCQGeoCoordinate(coord));
+}
+
+
 // Called when new mission items have completed downloading from Vehicle
 void MissionController::_newMissionItemsAvailableFromVehicle(bool removeAllRequested)
 {

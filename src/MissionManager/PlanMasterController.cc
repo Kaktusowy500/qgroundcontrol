@@ -142,6 +142,7 @@ void PlanMasterController::_activeVehicleChanged(Vehicle* activeVehicle)
         connect(_managerVehicle->missionManager(),      &MissionManager::sendComplete,              this, &PlanMasterController::_sendMissionComplete);
         connect(_managerVehicle->geoFenceManager(),     &GeoFenceManager::sendComplete,             this, &PlanMasterController::_sendGeoFenceComplete);
         connect(_managerVehicle->rallyPointManager(),   &RallyPointManager::sendComplete,           this, &PlanMasterController::_sendRallyPointsComplete);
+        connect(_managerVehicle->missionManager(), &MissionManager::_newCustomMissionItem,          this, &PlanMasterController::_forwardCustomMissionItem);
     }
 
     _offline = newOffline;
@@ -303,6 +304,11 @@ void PlanMasterController::_sendRallyPointsComplete(void)
     if (_deleteWhenSendCompleted) {
         this->deleteLater();
     }
+}
+
+void PlanMasterController::_forwardCustomMissionItem(const std::vector<double>& item)
+{
+    _missionController.addCustomMissionItem(item);
 }
 
 void PlanMasterController::sendToVehicle(void)

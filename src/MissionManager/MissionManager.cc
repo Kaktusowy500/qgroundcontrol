@@ -14,6 +14,7 @@
 #include "QGCApplication.h"
 #include "MissionCommandTree.h"
 #include "MissionCommandUIInfo.h"
+#include <iostream>
 
 QGC_LOGGING_CATEGORY(MissionManagerLog, "MissionManagerLog")
 
@@ -236,6 +237,10 @@ void MissionManager::_mavlinkMessageReceived(const mavlink_message_t& message)
     case MAVLINK_MSG_ID_HEARTBEAT:
         _handleHeartbeat(message);
         break;
+
+    case MAVLINK_MSG_ID_DEBUG_VECT:
+        _handleDebugVect(message);
+        break;
     }
 }
 
@@ -290,5 +295,15 @@ void MissionManager::_handleHeartbeat(const mavlink_message_t& message)
         _cachedLastCurrentIndex = -1;
         emit lastCurrentIndexChanged(_lastCurrentIndex);
     }
+}
+
+void MissionManager::_handleDebugVect(const mavlink_message_t& message)
+{
+    mavlink_debug_vect_t debugVect;
+    mavlink_msg_debug_vect_decode(&message, &debugVect);
+    // std::cout << "DEBUG VECT: " << debugVect.name << " " << debugVect.time_usec << " " << debugVect.x << " " << debugVect.y << " " << debugVect.z << std::endl;
+    std::vector<double> item = {debugVect.x, debugVect.y, debugVect.z};
+    emit _newCustomMissionItem(item);
+
 }
 

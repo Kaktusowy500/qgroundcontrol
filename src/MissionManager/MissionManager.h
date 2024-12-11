@@ -36,6 +36,9 @@ public:
     /// from mission start to resumeIndex in the generate mission.
     void generateResumeMission(int resumeIndex);
 
+signals:
+    void _newCustomMissionItem(const std::vector<double>& vector);
+
 private slots:
     void _mavlinkMessageReceived(const mavlink_message_t& message);
 
@@ -45,6 +48,7 @@ private:
     void _handleMissionCurrent(const mavlink_message_t& message);
     void _updateMissionIndex(int index);
     void _handleHeartbeat(const mavlink_message_t& message);
+    void _handleDebugVect(const mavlink_message_t& message);
 
     int _cachedLastCurrentIndex;
 };

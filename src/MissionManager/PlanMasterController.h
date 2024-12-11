@@ -129,6 +129,7 @@ private slots:
     void _sendGeoFenceComplete      (void);
     void _sendRallyPointsComplete   (void);
     void _updatePlanCreatorsList    (void);
+    void _forwardCustomMissionItem(const std::vector<double>& item);
 
 private:
     void _commonInit                (void);

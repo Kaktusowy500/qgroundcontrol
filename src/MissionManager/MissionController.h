@@ -259,6 +259,7 @@ public:
     QGroundControlQmlGlobal::AltMode globalAltitudeMode(void);
     QGroundControlQmlGlobal::AltMode globalAltitudeModeDefault(void);
     void setGlobalAltitudeMode(QGroundControlQmlGlobal::AltMode altMode);
+    void addCustomMissionItem(const std::vector<double>& item);
 
 signals:
     void visualItemsChanged                 (void);
