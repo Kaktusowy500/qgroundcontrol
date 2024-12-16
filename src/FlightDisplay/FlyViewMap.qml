@@ -290,9 +290,10 @@ FlightMap {
 
     MapItemView {
         model: _missionController.customMissionItems
-        delegate: CameraTriggerIndicator {
+        delegate: DetectedObjectIndicator {
             coordinate:    object.coordinate
             z:          QGroundControl.zOrderTopMost
+            objName:    "Detected Obj"
         }
     }
     // Add distance sensor view
