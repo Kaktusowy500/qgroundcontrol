@@ -27,13 +27,14 @@ class CustomPlugin : public QGCCorePlugin
 {
     Q_OBJECT
 public:
-    CustomPlugin(QGCApplication* app, QGCToolbox *toolbox);
+    CustomPlugin(QGCApplication* app, QGCToolbox* toolbox);
     bool mavlinkMessage(Vehicle* vehicle, LinkInterface* link, mavlink_message_t message) override;
 
     ~CustomPlugin();
 private slots:
 
 private:
+    void _handleDebugVect(const mavlink_message_t& message);
 
 private:
 };

@@ -2,5 +2,6 @@
     <qresource prefix="/qmlimages">
     </qresource>
     <qresource prefix="/qml">
+     <file alias="QGroundControl/FlightMap/DetectedObjectIndicator.qml">res/DetectedObjectIndicator.qml</file>
     </qresource>
 </RCC>

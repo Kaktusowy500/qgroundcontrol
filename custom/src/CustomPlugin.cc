@@ -23,10 +23,11 @@
 #include "AppMessages.h"
 #include "QmlComponentInfo.h"
 #include "QGCPalette.h"
+#include "QDetectedObject.h"
 
 QGC_LOGGING_CATEGORY(CustomLog, "CustomLog")
 
-CustomPlugin::CustomPlugin(QGCApplication *app, QGCToolbox* toolbox)
+CustomPlugin::CustomPlugin(QGCApplication* app, QGCToolbox* toolbox)
     : QGCCorePlugin(app, toolbox)
 {
     std::cout << "CustomPlugin::CustomPlugin" << std::endl;
@@ -34,14 +35,24 @@ CustomPlugin::CustomPlugin(QGCApplication *app, QGCToolbox* toolbox)
 
 bool CustomPlugin::mavlinkMessage(Vehicle* vehicle, LinkInterface* link, mavlink_message_t message)
 {
-    std::cout << "mavlinkMessage customm plugin" << std::endl;
     Q_UNUSED(vehicle);
     Q_UNUSED(link);
-    Q_UNUSED(message);
-
+    switch (message.msgid) {
+    case MAVLINK_MSG_ID_DEBUG_VECT:
+        _handleDebugVect(message);
+        break;
+    }
     return true;
 }
 
+void CustomPlugin::_handleDebugVect(const mavlink_message_t& message)
+{
+    mavlink_debug_vect_t debugVect;
+    mavlink_msg_debug_vect_decode(&message, &debugVect);
+    // std::cout << "DEBUG VECT: " << debugVect.name << " " << debugVect.time_usec << " " << debugVect.x << " " << debugVect.y << " " << debugVect.z << std::endl;
+    QGeoCoordinate coord(debugVect.x, debugVect.y, 300);
+    customMapItems()->append(new QDetectedObject(coord, debugVect.name, QUrl("DetectedObjectIndicator.qml")));
+}
 
 CustomPlugin::~CustomPlugin()
 {
